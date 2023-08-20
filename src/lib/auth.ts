@@ -30,9 +30,9 @@ export const authOptions: NextAuthOptions = {
         if (!username || !password) return null;
         await connectToDB();
         const user = await User.findOne({ email: username });
-        if (!user || (!await compare(password, user.password))) return null;
+        if (!user || !(await compare(password, user.password))) return null;
         return {
-          id: randomUUID(),
+          id: user.id,
           name: user.name,
           email: user.email,
         };
@@ -41,12 +41,13 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     session: ({ session, token }) => {
+      console.log(session, token);
+
       return {
         ...session,
         user: {
           ...session.user,
           id: token.id,
-          randomKey: token.randomKey,
         },
       };
     },

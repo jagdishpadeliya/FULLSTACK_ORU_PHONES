@@ -10,6 +10,8 @@ import React from 'react'
 
 const page = async () => {
     const session = await getServerSession(authOptions)
+    console.log(session);
+    
     const user = await fetchUser(session?.user?.id as string)
     const isOnboarded = user?.onboarded
     const { name, email, phoneNumber, bio, image } = user || session?.user
