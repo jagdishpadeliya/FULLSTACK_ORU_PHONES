@@ -1,10 +1,10 @@
-'use client'
 import '../globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 import LeftSidebar from '@/components/LeftSidebar'
 import Header from '@/components/Header'
+import AuthProvider from '@/context/AuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,13 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex relative max-h-screen overflow-hidden`}>
-        <SessionProvider>
+        <AuthProvider>
           <LeftSidebar />
           <main className='w-full relative'>
             <Header />
             {children}
           </main>
-        </SessionProvider>
+        </AuthProvider>
       </body>
     </html>
   )

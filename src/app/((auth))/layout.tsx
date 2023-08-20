@@ -1,7 +1,7 @@
-'use client'
 import { SessionProvider } from 'next-auth/react'
 import '../globals.css'
 import Image from 'next/image'
+import AuthProvider from '@/context/AuthProvider'
 
 export const metadata = {
   title: 'Next.js',
@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <SessionProvider>
+      <AuthProvider>
         <body className='container'>
           <div className='relative w-20 h-20'>
             <Image
@@ -26,7 +26,7 @@ export default function RootLayout({
           </div>
           {children}
         </body>
-      </SessionProvider>
+      </AuthProvider>
     </html>
   )
 }
