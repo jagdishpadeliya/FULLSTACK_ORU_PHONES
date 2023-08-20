@@ -55,7 +55,7 @@ const Onboarding = () => {
     const [files, setFiles] = useState<File[]>([])
     useEffect(() => {
         async function getUser() {
-            const user = await fetchUser(session?.user?.id)
+            const user = await fetchUser(session?.user?.id as string)
             console.log("user" + user);
 
             setValue("name", user?.name)
@@ -81,8 +81,8 @@ const Onboarding = () => {
         try {
             const formData = new FormData();
             formData.append("file", files[0])
-            formData.append("upload_preset", "bwkbphsq")
-            const imageUploadResponse = await fetch("https://api.cloudinary.com/v1_1/du4l7l3gu/image/upload",
+            formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET!)
+            const imageUploadResponse = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
                 {
                     method: "POST",
                     body: formData
@@ -90,7 +90,7 @@ const Onboarding = () => {
             const imageResponseJSON = (await imageUploadResponse.json());
 
             await updateUser({
-                userId: session?.user?.id,
+                userId: session?.user?.id as string,
                 name: values.name,
                 email: values.email,
                 phoneNumber: values.phoneNumber,

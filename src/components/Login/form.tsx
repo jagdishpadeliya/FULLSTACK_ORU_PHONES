@@ -68,14 +68,10 @@ const SignIn = () => {
     useEffect(() => {
         async function getProviders() {
             const providers = await getSupportedProviders();
-            const providersArray = Object.values(providers).filter((provider) => {
-                if (provider.id !== "credentials")
-                    return { id: provider.id }
-
-            });
-            console.log(providersArray);
-
-            setProviders(providersArray);
+            if (providers !== null) {
+                const providersArray = Object.values(providers).filter((provider) => provider.id !== "credentials")
+                setProviders(providersArray);
+            }
         }
         getProviders();
     }, [])
